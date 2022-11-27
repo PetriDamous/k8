@@ -5,6 +5,7 @@ metadata:
   labels:
     app: my-nginx
 spec:
+  replicas: 3
   selector:
     matchLabels:
       app: my-nginx
@@ -22,3 +23,18 @@ spec:
               cpu: "200m" # 200 millicpu (.2 cpu or 20% of the cpu)
           ports:
             - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 1
