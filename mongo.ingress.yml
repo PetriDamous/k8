@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-ingress
+  labels:
+    name: mongo-ingress
+  namespace: default # name of namespace where pods live
+spec:
+  rules:
+    - host: mongo.com
+      http:
+        paths:
+          - path: "/" # allows for different routes like in node.js and react
+            backend:
+              serviceName: mongodb-service
+              servicePort: 27017
